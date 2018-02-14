@@ -64,6 +64,10 @@ BEGIN_MESSAGE_MAP(CCalculatorGUIDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	
+	ON_EN_CHANGE(MAIN_EDIT_BOX, &CCalculatorGUIDlg::onChangeMainEditText)
+	ON_COMMAND(IDOK, &CCalculatorGUIDlg::onPressedEnter)
+
 	ON_BN_CLICKED(IDC_PLUS_BUTTON, &CCalculatorGUIDlg::OnBnClickedPlusButton)
 	ON_BN_CLICKED(IDC_MINUS_BUTTON, &CCalculatorGUIDlg::OnBnClickedMinusButton)
 	ON_BN_CLICKED(IDC_ANS_BUTTON, &CCalculatorGUIDlg::OnBnClickedAnsButton)

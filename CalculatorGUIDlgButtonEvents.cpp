@@ -43,6 +43,57 @@ void CCalculatorGUIDlg::setMainEditText(string str)
 	mainEditText->SetWindowTextW(CString(str.c_str()));
 }
 
+void CCalculatorGUIDlg::moveMainEditTextCursorToEnd()
+{
+	CEdit *mainEditText = (CEdit*)GetDlgItem(MAIN_EDIT_BOX);
+	mainEditText->SetSel(0,-1);
+	mainEditText->SetSel(-1);
+}
+
+void CCalculatorGUIDlg::onChangeMainEditText()
+{
+	string currentString = getMainEditText();
+	int len = currentString.size();
+
+	if (currentString[len-1] == '+')
+	{
+		currentString.erase(len-1,1);
+		setMainEditText(currentString);
+		moveMainEditTextCursorToEnd();
+		
+		OnBnClickedPlusButton();
+	}
+	else if (currentString[len - 1] == '-')
+	{
+		currentString.erase(len - 1, 1);
+		setMainEditText(currentString);
+		moveMainEditTextCursorToEnd();
+		
+		OnBnClickedMinusButton();
+	}
+	else if (currentString[len - 1] == '*')
+	{
+		currentString.erase(len - 1, 1);
+		setMainEditText(currentString);
+		moveMainEditTextCursorToEnd();
+
+		OnBnClickedMultiplyButton();
+	}
+	else if (currentString[len - 1] == '/')
+	{
+		currentString.erase(len - 1, 1);
+		setMainEditText(currentString);
+		moveMainEditTextCursorToEnd();
+
+		OnBnClickedDivideButton();
+	}
+}
+
+void CCalculatorGUIDlg::onPressedEnter()
+{
+	OnBnClickedAnsButton();
+}
+
 void CCalculatorGUIDlg::addToMainEditText(char ch) 
 {
 	setMainEditText(getMainEditText() + ch);

@@ -52,13 +52,17 @@ public:
 public:
 	string oprator;
 	vector<string> argument;
+	bool doClearMainEditText;
 public:
 	string getMainEditText();
 	void setMainEditText(string str);
 	void refreshAllStrings();
 	void setOutputStaticText(string str);
 	void addToMainEditText(char ch);
+	void moveMainEditTextCursorToEnd();
 	afx_msg void OnBnClickedClearButton();
 	afx_msg void OnBnClickedMultiplyButton();
 	afx_msg void OnBnClickedDivideButton();
+	afx_msg void onChangeMainEditText();
+	afx_msg void onPressedEnter();
 };
