@@ -89,7 +89,7 @@ BOOL CCalculatorGUIDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	initStrings();
+	refreshAllStrings();
 
 	// Add "About..." menu item to system menu.
 

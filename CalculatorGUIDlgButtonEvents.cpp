@@ -13,57 +13,77 @@
 
 using namespace std;
 
-void CCalculatorGUIDlg::initStrings() {
+void CCalculatorGUIDlg::refreshAllStrings() {
 	argument.clear();
 	argument.push_back("");
 	argument.push_back("");
-
-	currentString = "";
+	setMainEditText("");
 	oprator = "";
 }
 
-void CCalculatorGUIDlg::refreshOutputText() {
-	CWnd *mainShowText = GetDlgItem(MAIN_SHOW);
-	mainShowText->SetWindowTextW(CString(currentString.c_str()));
+void CCalculatorGUIDlg::setOutputStaticText(string str)
+{
+	CWnd *outputStaticText = GetDlgItem(OUTPUT_STATIC_TEXT);
+	outputStaticText->SetWindowTextW(CString(str.c_str()));
 }
 
-void CCalculatorGUIDlg::addToString(char ch) {
-	currentString += ch;
-	refreshOutputText();
+string CCalculatorGUIDlg::getMainEditText()
+{
+	CWnd *mainEditText= GetDlgItem(MAIN_EDIT_BOX);
+	CString str = _T("");
+	mainEditText->GetWindowTextW(str);
+	CT2A convertString(str);
+	string retStr(convertString);
+	return retStr;
+}
+
+void CCalculatorGUIDlg::setMainEditText(string str)
+{
+	CWnd *mainEditText = GetDlgItem(MAIN_EDIT_BOX);
+	mainEditText->SetWindowTextW(CString(str.c_str()));
+}
+
+void CCalculatorGUIDlg::addToMainEditText(char ch) 
+{
+	setMainEditText(getMainEditText() + ch);
 }
 
 void CCalculatorGUIDlg::OnBnClickedPlusButton() {
 	// TODO: Add your control notification handler code here
+	string currentString = getMainEditText();
 	if (currentString.size() && argument[0] == "") {
 		argument[0] = currentString;
-		currentString = "";
+		setMainEditText("");
 		oprator = "+";
 	}
 }
 
 void CCalculatorGUIDlg::OnBnClickedMinusButton() {
 	// TODO: Add your control notification handler code here
+	string currentString = getMainEditText();
 	if (currentString.size() && argument[0] == "") {
 		argument[0] = currentString;
-		currentString = "";
+		setMainEditText("");
 		oprator = "-";
 	}
 }
 
 void CCalculatorGUIDlg::OnBnClickedMultiplyButton() {
 	// TODO: Add your control notification handler code here
+	string currentString = getMainEditText();
 	if (currentString.size() && argument[0] == "") {
 		argument[0] = currentString;
-		currentString = "";
+		setMainEditText("");
 		oprator = "*";
 	}
 }
 
 void CCalculatorGUIDlg::OnBnClickedDivideButton() {
 	// TODO: Add your control notification handler code here
+	string currentString = getMainEditText();
 	if (currentString.size() && argument[0] == "") {
 		argument[0] = currentString;
-		currentString = "";
+		setMainEditText("");
 		oprator = "/";
 	}
 }
@@ -71,6 +91,7 @@ void CCalculatorGUIDlg::OnBnClickedDivideButton() {
 
 void CCalculatorGUIDlg::OnBnClickedAnsButton() {
 	// TODO: Add your control notification handler code here
+	string currentString = getMainEditText();
 	if (currentString.size() && argument[0] != "" && oprator!="") {
 		argument[1] = currentString;
 
@@ -80,87 +101,92 @@ void CCalculatorGUIDlg::OnBnClickedAnsButton() {
 
 		operation = operationFactory.getOperation(oprator);
 
-		if (operation != nullptr) {
+		if (operation != nullptr) 
+		{
 			try {
 				result = operation->operation(argument);
 				char tmp[100];
 				sprintf_s(tmp, "%lf", result);
-				currentString = tmp;
-				refreshOutputText();
-				initStrings();
-			} catch (const std::exception&) {
-				initStrings();
-				currentString = "Error occurred!";
-				refreshOutputText();
+				setOutputStaticText(tmp);
+				refreshAllStrings();
+			} catch (exception& e) {
+				setOutputStaticText(e.what());
+				refreshAllStrings();
 			}
+		}
+		else
+		{
+			setOutputStaticText("Invalid Operator");
+			refreshAllStrings();
 		}
 	}
 }
 
 void CCalculatorGUIDlg::OnBnClickedClearButton() {
 	// TODO: Add your control notification handler code here
-	initStrings();
-	refreshOutputText();
+	refreshAllStrings();
+	setOutputStaticText("");
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey1() {
 	// TODO: Add your control notification handler code here
-	addToString('1');
+	addToMainEditText('1');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey2() {
 	// TODO: Add your control notification handler code here
-	addToString('2');
+	addToMainEditText('2');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey3() {
 	// TODO: Add your control notification handler code here
-	addToString('3');
+	addToMainEditText('3');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey4() {
 	// TODO: Add your control notification handler code here
-	addToString('4');
+	addToMainEditText('4');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey5() {
 	// TODO: Add your control notification handler code here
-	addToString('5');
+	addToMainEditText('5');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey6() {
 	// TODO: Add your control notification handler code here
-	addToString('6');
+	addToMainEditText('6');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey7() {
 	// TODO: Add your control notification handler code here
-	addToString('7');
+	addToMainEditText('7');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey8() {
 	// TODO: Add your control notification handler code here
-	addToString('8');
+	addToMainEditText('8');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey9() {
 	// TODO: Add your control notification handler code here
-	addToString('9');
+	addToMainEditText('9');
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedButtonKey0() {
 	// TODO: Add your control notification handler code here
+	string currentString = getMainEditText();
 	if (currentString.size()) {
-		addToString('0');
+		addToMainEditText('0');
 	}
 }

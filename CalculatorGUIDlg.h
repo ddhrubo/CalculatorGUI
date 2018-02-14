@@ -50,12 +50,14 @@ public:
 	afx_msg void OnBnClickedButtonKey9();
 	afx_msg void OnBnClickedButtonKey0();
 public:
-	string currentString, oprator;
+	string oprator;
 	vector<string> argument;
 public:
-	void initStrings();
-	void refreshOutputText();
-	void addToString(char ch);
+	string getMainEditText();
+	void setMainEditText(string str);
+	void refreshAllStrings();
+	void setOutputStaticText(string str);
+	void addToMainEditText(char ch);
 	afx_msg void OnBnClickedClearButton();
 	afx_msg void OnBnClickedMultiplyButton();
 	afx_msg void OnBnClickedDivideButton();
