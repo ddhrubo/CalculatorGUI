@@ -10,15 +10,13 @@
 
 #include <Operation.h>
 #include <OperationFactory.h>
+#include "EditBoxTextParser.h"
 
 using namespace std;
 
 void CCalculatorGUIDlg::refreshAllStrings() {
-	argument.clear();
-	argument.push_back("");
-	argument.push_back("");
 	setMainEditText("");
-	oprator = "";
+	noHandleMainEditTextChange = false;
 }
 
 void CCalculatorGUIDlg::setOutputStaticText(string str)
@@ -52,8 +50,16 @@ void CCalculatorGUIDlg::moveMainEditTextCursorToEnd()
 
 void CCalculatorGUIDlg::onChangeMainEditText()
 {
+	if (noHandleMainEditTextChange)
+	{
+		noHandleMainEditTextChange = false;
+		return;
+	}
+
 	string currentString = getMainEditText();
 	int len = currentString.size();
+	if (!len)
+		return;
 
 	if (currentString[len-1] == '+')
 	{
@@ -87,6 +93,12 @@ void CCalculatorGUIDlg::onChangeMainEditText()
 
 		OnBnClickedDivideButton();
 	}
+	else if (currentString[len - 1] == ' ')
+	{
+		currentString.erase(len - 1, 1);
+		setMainEditText(currentString);
+		moveMainEditTextCursorToEnd();
+	}
 }
 
 void CCalculatorGUIDlg::onPressedEnter()
@@ -101,75 +113,75 @@ void CCalculatorGUIDlg::addToMainEditText(char ch)
 
 void CCalculatorGUIDlg::OnBnClickedPlusButton() {
 	// TODO: Add your control notification handler code here
-	string currentString = getMainEditText();
-	if (currentString.size() && argument[0] == "") {
-		argument[0] = currentString;
-		setMainEditText("");
-		oprator = "+";
-	}
+	noHandleMainEditTextChange = true;
+	setMainEditText(getMainEditText() + " + ");
+	moveMainEditTextCursorToEnd();
 }
 
 void CCalculatorGUIDlg::OnBnClickedMinusButton() {
 	// TODO: Add your control notification handler code here
-	string currentString = getMainEditText();
-	if (currentString.size() && argument[0] == "") {
-		argument[0] = currentString;
-		setMainEditText("");
-		oprator = "-";
-	}
+	noHandleMainEditTextChange = true;
+	setMainEditText(getMainEditText() + " - ");
+	moveMainEditTextCursorToEnd();
 }
 
 void CCalculatorGUIDlg::OnBnClickedMultiplyButton() {
 	// TODO: Add your control notification handler code here
-	string currentString = getMainEditText();
-	if (currentString.size() && argument[0] == "") {
-		argument[0] = currentString;
-		setMainEditText("");
-		oprator = "*";
-	}
+	noHandleMainEditTextChange = true;
+	setMainEditText(getMainEditText() + " * ");
+	moveMainEditTextCursorToEnd();
 }
 
 void CCalculatorGUIDlg::OnBnClickedDivideButton() {
-	// TODO: Add your control notification handler code here
-	string currentString = getMainEditText();
-	if (currentString.size() && argument[0] == "") {
-		argument[0] = currentString;
-		setMainEditText("");
-		oprator = "/";
-	}
+	noHandleMainEditTextChange = true;
+	setMainEditText(getMainEditText() + " / ");
+	moveMainEditTextCursorToEnd();
 }
 
 
 void CCalculatorGUIDlg::OnBnClickedAnsButton() {
 	// TODO: Add your control notification handler code here
 	string currentString = getMainEditText();
-	if (currentString.size() && argument[0] != "" && oprator!="") {
-		argument[1] = currentString;
+	EditBoxTextParser editBoxTextParser;
+	OperationData operationData;
+	
+	try
+	{
+		operationData = editBoxTextParser.parseEditBoxText(currentString);
+	}
+	catch (exception& e)
+	{
+		setOutputStaticText("Invalid input format!");
+		refreshAllStrings();
+		return;
+	}
+	
+	Operation* operation = nullptr;
+	OperationFactory operationFactory;
+	double result;
 
-		Operation* operation = nullptr;
-		OperationFactory operationFactory;
-		double result;
+	operation = operationFactory.getOperation(operationData.oprator);
 
-		operation = operationFactory.getOperation(oprator);
-
-		if (operation != nullptr) 
+	if (operation != nullptr)
+	{
+		try
 		{
-			try {
-				result = operation->operation(argument);
-				char tmp[100];
-				sprintf_s(tmp, "%lf", result);
-				setOutputStaticText(tmp);
-				refreshAllStrings();
-			} catch (exception& e) {
-				setOutputStaticText(e.what());
-				refreshAllStrings();
-			}
-		}
-		else
-		{
-			setOutputStaticText("Invalid Operator");
+			result = operation->operation(operationData.operands);
+			char tmp[100];
+			sprintf_s(tmp, "%lf", result);
+			setOutputStaticText(tmp);
 			refreshAllStrings();
 		}
+		catch (exception& e)
+		{
+			setOutputStaticText(e.what());
+			refreshAllStrings();
+		}
+	}
+	else
+	{
+		setOutputStaticText("Invalid Operator");
+		refreshAllStrings();
 	}
 }
 

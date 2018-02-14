@@ -50,9 +50,7 @@ public:
 	afx_msg void OnBnClickedButtonKey9();
 	afx_msg void OnBnClickedButtonKey0();
 public:
-	string oprator;
-	vector<string> argument;
-	bool doClearMainEditText;
+	bool noHandleMainEditTextChange;
 public:
 	string getMainEditText();
 	void setMainEditText(string str);

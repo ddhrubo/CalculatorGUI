@@ -194,6 +194,7 @@
   <ItemGroup>
     <ClInclude Include="CalculatorGUI.h" />
     <ClInclude Include="CalculatorGUIDlg.h" />
+    <ClInclude Include="EditBoxTextParser.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="CalculatorGUI.cpp" />
     <ClCompile Include="CalculatorGUIDlg.cpp" />
     <ClCompile Include="CalculatorGUIDlgButtonEvents.cpp" />
+    <ClCompile Include="EditBoxTextParser.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
