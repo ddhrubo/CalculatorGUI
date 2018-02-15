@@ -72,6 +72,7 @@ BEGIN_MESSAGE_MAP(CCalculatorGUIDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MINUS_BUTTON, &CCalculatorGUIDlg::OnBnClickedMinusButton)
 	ON_BN_CLICKED(IDC_ANS_BUTTON, &CCalculatorGUIDlg::OnBnClickedAnsButton)
 	ON_BN_CLICKED(IDC_BUTTON_KEY_1, &CCalculatorGUIDlg::OnBnClickedButtonKey1)
+
 	ON_BN_CLICKED(IDC_BUTTON_KEY_2, &CCalculatorGUIDlg::OnBnClickedButtonKey2)
 	ON_BN_CLICKED(IDC_BUTTON_KEY_3, &CCalculatorGUIDlg::OnBnClickedButtonKey3)
 	ON_BN_CLICKED(IDC_BUTTON_KEY_4, &CCalculatorGUIDlg::OnBnClickedButtonKey4)
@@ -86,6 +87,7 @@ BEGIN_MESSAGE_MAP(CCalculatorGUIDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_DIVIDE_BUTTON, &CCalculatorGUIDlg::OnBnClickedDivideButton)
 END_MESSAGE_MAP()
 
+//DECLARE_DYNAMIC(COperatorHighlightEditBox)
 
 // CCalculatorGUIDlg message handlers
 
@@ -93,6 +95,7 @@ BOOL CCalculatorGUIDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	cOperatorHighlightEditBox.SubclassDlgItem(MAIN_EDIT_BOX, this);
 	refreshAllStrings();
 
 	// Add "About..." menu item to system menu.

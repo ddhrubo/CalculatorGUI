@@ -6,6 +6,9 @@
 
 #include <string>
 #include <vector>
+
+#include "COperatorHighlightEditBox.h"
+
 using namespace std;
 
 
@@ -63,4 +66,7 @@ public:
 	afx_msg void OnBnClickedDivideButton();
 	afx_msg void onChangeMainEditText();
 	afx_msg void onPressedEnter();
+
+private:
+	COperatorHighlightEditBox cOperatorHighlightEditBox;
 };

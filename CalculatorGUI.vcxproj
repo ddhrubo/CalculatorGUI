@@ -114,9 +114,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Study\Win32_tutorial\SimpleCalculatorConsole\CheckLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>D:\Study_Projects\CalculatorGUI\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CheckLibrary.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -194,6 +197,7 @@
   <ItemGroup>
     <ClInclude Include="CalculatorGUI.h" />
     <ClInclude Include="CalculatorGUIDlg.h" />
+    <ClInclude Include="COperatorHighlightEditBox.h" />
     <ClInclude Include="EditBoxTextParser.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -203,6 +207,7 @@
     <ClCompile Include="CalculatorGUI.cpp" />
     <ClCompile Include="CalculatorGUIDlg.cpp" />
     <ClCompile Include="CalculatorGUIDlgButtonEvents.cpp" />
+    <ClCompile Include="COperatorHighlightEditBox.cpp" />
     <ClCompile Include="EditBoxTextParser.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
