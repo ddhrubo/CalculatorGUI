@@ -17,12 +17,13 @@ OperationData EditBoxTextParser::parseEditBoxText(string str) throw(exception)
 		stringParts.push_back(strPart);
 	}
 
-	operationData.operands.push_back(stringParts[0]);
-	operationData.operands.push_back(stringParts[2]);
-
-	operationData.oprator = stringParts[1];
-
-	if (stringParts.size() > 3)
+	if (stringParts.size() != 3)
 		throw exception();
-	else return operationData;
+	else
+	{
+		operationData.operands.push_back(stringParts[0]);
+		operationData.operands.push_back(stringParts[2]);
+		operationData.oprator = stringParts[1];
+		return operationData;
+	}
 }
